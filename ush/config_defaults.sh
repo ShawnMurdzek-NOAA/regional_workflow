@@ -2392,3 +2392,16 @@ CLEAN_OLDFCST_HRS="24"
 CLEAN_OLDSTMPPOST_HRS="24"
 CLEAN_NWGES_HRS="72"
 
+#
+#-----------------------------------------------------------------------
+#
+# Parameters for RRFS OSSE configuration
+# DO_OSSE:
+#   Sets observation paths to point to directories with synthetic obs
+# OSSE_PERIOD:
+#   OSSE period ("spring" or "winter")
+#-----------------------------------------------------------------------
+#
+
+DO_OSSE="FALSE"
+OSSE_PERIOD="spring"

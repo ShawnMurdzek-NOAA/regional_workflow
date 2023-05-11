@@ -931,7 +931,7 @@ EOF
 
      if [ "${IO_LAYOUT_Y}" == "1" ]; then
        ln_vrfy -sf ${FIX_GSI}/${PREDEF_GRID_NAME}/fv3_grid_spec  fv3_grid_spec
-       ./${exect} > stdout_sfc_sugery 2>&1 || print_info_msg "\
+       ${APRUN} ./${exect} > stdout_sfc_sugery 2>&1 || print_info_msg "\
        Call to executable to run surface surgery returned with nonzero exit code."
      else
        for ii in ${list_iolayout}
@@ -939,7 +939,7 @@ EOF
          iii=$(printf %4.4i $ii)
          ln_vrfy -sf ${gridspec_dir}/fv3_grid_spec.${iii}  fv3_grid_spec
          ln_vrfy -sf sfc_data.nc.${iii} sfc_data.nc
-         ./${exect} > stdout_sfc_sugery.${iii} 2>&1 || print_info_msg "\
+         ${APRUN} ./${exect} > stdout_sfc_sugery.${iii} 2>&1 || print_info_msg "\
          Call to executable to run surface surgery returned with nonzero exit code."
          ls -l > list_sfc_sugery.${iii}
        done

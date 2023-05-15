@@ -20,9 +20,10 @@ elif [[ -d /glade ]] ; then
 elif [[ -d /sw/gaea ]] ; then
     PLATFORM=gaea
     FIX_RRFS_LOCATION="/to/do"
-elif [[ -d /work ]]; then
+elif [[ -d /work2 ]]; then
     PLATFORM=orion
-    FIX_RRFS_LOCATION="/work/noaa/rtrr/FIX_RRFS"
+    #FIX_RRFS_LOCATION="/work/noaa/rtrr/FIX_RRFS"
+    FIX_RRFS_LOCATION="/wor2/noaa/wrfruc/murdzek/RRFS_input_data/FIX_RRFS"
 else
     PLATFORM=unknow
     FIX_RRFS_LOCATION="/this/is/an/unknow/platform"

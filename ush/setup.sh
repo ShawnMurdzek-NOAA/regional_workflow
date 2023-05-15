@@ -866,9 +866,12 @@ case $MACHINE in
     ;;
 
   "ORION")
-    FIXgsm=${FIXgsm:-"/work/noaa/global/glopara/fix/fix_am"}
-    TOPO_DIR=${TOPO_DIR:-"/work/noaa/global/glopara/fix/fix_orog"}
-    SFC_CLIMO_INPUT_DIR=${SFC_CLIMO_INPUT_DIR:-"/work/noaa/global/glopara/fix/fix_sfc_climo"}
+    #FIXgsm=${FIXgsm:-"/work/noaa/global/glopara/fix/fix_am"}
+    #TOPO_DIR=${TOPO_DIR:-"/work/noaa/global/glopara/fix/fix_orog"}
+    #SFC_CLIMO_INPUT_DIR=${SFC_CLIMO_INPUT_DIR:-"/work/noaa/global/glopara/fix/fix_sfc_climo"}
+    FIXgsm=${FIXgsm:-"/work2/noaa/wrfruc/murdzek/RRFS_input_data/fix/fix_am"}
+    TOPO_DIR=${TOPO_DIR:-"/work2/noaa/wrfruc/murdzek/RRFS_input_data/fix/fix_orog"}
+    SFC_CLIMO_INPUT_DIR=${SFC_CLIMO_INPUT_DIR:-"/work2/noaa/wrfruc/murdzek/RRFS_input_data/fix/fix_sfc_climo"}
     FIXLAM_NCO_BASEDIR=${FIXLAM_NCO_BASEDIR:-"/needs/to/be/specified"}
     ;;
 

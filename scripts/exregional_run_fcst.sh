@@ -121,8 +121,12 @@ case $MACHINE in
   "HERA")
     ulimit -s unlimited
     ulimit -a
-    APRUN="srun"
-    OMP_NUM_THREADS=2
+    APRUN="srun --mem=0"
+    if [ "${PREDEF_GRID_NAME}" == "RRFS_NA_3km" ]; then
+      OMP_NUM_THREADS=4
+    else
+      OMP_NUM_THREADS=2
+    fi
     ;;
 
   "ORION")
@@ -301,6 +305,7 @@ fi
 # we use below.
 #
 if [ "${CCPP_PHYS_SUITE}" = "FV3_HRRR" ] || \
+   [ "${CCPP_PHYS_SUITE}" = "FV3_HRRR_gf" ]  || \
    [ "${CCPP_PHYS_SUITE}" = "FV3_RAP" ]  || \
    [ "${CCPP_PHYS_SUITE}" = "FV3_GFS_v15_thompson_mynn_lam3km" ]; then
 

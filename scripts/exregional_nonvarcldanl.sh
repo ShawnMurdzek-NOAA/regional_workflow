@@ -79,10 +79,8 @@ case $MACHINE in
 "WCOSS2")
   ulimit -s unlimited
   ulimit -a
-  APRUN="mpiexec -n ${IO_LAYOUT_Y} -ppn 16"
   ncores=$(( NNODES_RUN_NONVARCLDANL*PPN_RUN_NONVARCLDANL ))
   APRUN="mpiexec -n ${ncores} -ppn ${PPN_RUN_NONVARCLDANL}"
-  APRUN="mpiexec -n 1 -ppn 1"
   ;;
 #
 "HERA")
@@ -171,6 +169,7 @@ list_iolayout=$(seq 0 $n_iolayouty)
 cp_vrfy ${fixgriddir}/fv3_akbk                               fv3_akbk
 cp_vrfy ${fixgriddir}/fv3_grid_spec                          fv3_grid_spec
 
+BKTYPE=0
 if [ -r "${bkpath}/coupler.res" ]; then # Use background from warm restart
   if [ "${IO_LAYOUT_Y}" == "1" ]; then
     ln_vrfy -s ${bkpath}/fv_core.res.tile1.nc         fv3_dynvars
@@ -269,7 +268,7 @@ fi
 if [ ${DO_ENKF_RADAR_REF} == "TRUE" ]; then
   l_qnr_from_qr=".true."
 fi
-if [ -r "${cycle_dir}/anal_radardbz_gsi${cycle_tag}/gsi_complete_radar.txt" ] || [ -r "${cycle_dir}/anal_conv_dbz_gsi${cycle_tag}/gsi_complete_radar.txt" ]; then
+if [ -r "${comout}/gsi_complete_radar.txt" ] ; then
   l_precip_clear_only=".true."
   l_qnr_from_qr=".true."
 fi
@@ -283,6 +282,7 @@ cat << EOF > gsiparm.anl
   ihour=${HH},
   iminute=00,
   fv3_io_layout_y=${n_iolayouty},
+  fv3sar_bg_opt=${BKTYPE}
  /
  &RAPIDREFRESH_CLDSURF
    dfi_radar_latent_heat_time_period=20.0,
@@ -348,7 +348,10 @@ fi
 $APRUN ./${exect} > stdout 2>&1 || print_err_msg_exit "\
 Call to executable to run No Var Cloud Analysis returned with nonzero exit code."
 cp stdout ${comout}/stdout.t${HH}z.nonvarcloudanalysis
-cp stdout_cloudanalysis.d00 ${comout}/stdout.t${HH}z.nonvarcloudanalysis.d00
+for fcld in stdout_cloudanalysis.*
+do
+    cp ${fcld} ${comout}/stdout.t${HH}z.nonvar${fcld:7}
+done
 #
 #-----------------------------------------------------------------------
 #

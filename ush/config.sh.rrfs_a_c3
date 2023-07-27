@@ -1,5 +1,5 @@
 MACHINE="wcoss2"
-version="v0.5.0"
+version="v0.5.2"
 ACCOUNT="RRFS_DEV"
 #RESERVATION="rrfsdet"
 EXPT_BASEDIR="/lfs/h2/emc/lam/noscrub/emc.lam/rrfs/$version/"
@@ -31,6 +31,7 @@ DO_BUFRSND="TRUE"
 USE_FVCOM="TRUE"
 PREP_FVCOM="TRUE"
 DO_PARALLEL_PRDGEN="FALSE"
+DO_GSIDIAG_OFFLINE="TRUE"
 
 EXTRN_MDL_ICS_OFFSET_HRS="3"
 LBC_SPEC_INTVL_HRS="1"
@@ -102,13 +103,12 @@ EXTRN_MDL_NAME_LBCS="FV3GFS"
 envir="para"
 
 NET="rrfs_a"
-TAG="c3v50"
+TAG="c3v52"
 
 ARCHIVEDIR="/NCEPDEV/emc-meso/1year/emc.lam/${TAG}"
 NCL_REGION="conus"
 MODEL="rrfs_a"
 RUN="rrfs"
-COMINgfs=""
 
 . set_rrfs_config.sh
 

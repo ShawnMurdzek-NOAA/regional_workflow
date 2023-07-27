@@ -205,10 +205,6 @@ fi
 #
 net4=$(echo ${NET:0:4} | tr '[:upper:]' '[:lower:]')
 #
-bgdawp=${postprd_dir}/${NET}.t${cyc}z.bgdawpf${fhr}.${tmmark}.grib2
-bgrd3d=${postprd_dir}/${NET}.t${cyc}z.bgrd3df${fhr}.${tmmark}.grib2
-bgifi=${postprd_dir}/${NET}.t${cyc}z.bgifif${fhr}.${tmmark}.grib2
-bgsfc=${postprd_dir}/${NET}.t${cyc}z.bgsfcf${fhr}.${tmmark}.grib2
 
 prslev=${net4}.t${cyc}z.prslev.f${fhr}.${gridname}grib2
 natlev=${net4}.t${cyc}z.natlev.f${fhr}.${gridname}grib2
@@ -216,7 +212,6 @@ ififip=${net4}.t${cyc}z.ififip.f${fhr}.${gridname}grib2
 testbed=${net4}.t${cyc}z.testbed.f${fhr}.${gridname}grib2
 
 # extract the output fields for the testbed
-touch ${bgsfc}
 if [[ ! -z ${TESTBED_FIELDS_FN} ]]; then
   if [[ -f ${FIX_UPP}/${TESTBED_FIELDS_FN} ]]; then
     wgrib2 ${postprd_dir}/${prslev} | grep -F -f ${FIX_UPP}/${TESTBED_FIELDS_FN} | wgrib2 -i -grib ${postprd_dir}/${testbed} ${postprd_dir}/${prslev}
@@ -247,22 +242,12 @@ if [ -f  ${postprd_dir}/${ififip} ]; then
   cp_vrfy ${postprd_dir}/${ififip} ${comout}/${ififip}
 fi
 cp_vrfy ${postprd_dir}/${testbed}  ${comout}/${testbed}
-ln_vrfy -sf --relative ${comout}/${prslev} ${comout}/BGDAWP_${basetime}${post_fhr}
-ln_vrfy -sf --relative ${comout}/${natlev} ${comout}/BGRD3D_${basetime}${post_fhr}
-if [ -f ${comout}/${ififip} ]; then
-  ln_vrfy -sf --relative ${comout}/${ififip} ${comout}/BGIFI_${basetime}${post_fhr}
-fi
-ln_vrfy -sf --relative ${comout}/${testbed}  ${comout}/BGSFC_${basetime}${post_fhr}
 
-ln_vrfy -sf --relative ${comout}/${prslev} ${comout}/${NET}.t${cyc}z.bgdawpf${fhr}.${tmmark}.grib2
 wgrib2 ${comout}/${prslev} -s > ${comout}/${prslev}.idx
-ln_vrfy -sf --relative ${comout}/${natlev} ${comout}/${NET}.t${cyc}z.bgrd3df${fhr}.${tmmark}.grib2
 wgrib2 ${comout}/${natlev} -s > ${comout}/${natlev}.idx
 if [ -f ${comout}/${ififip} ]; then
-  ln_vrfy -sf --relative ${comout}/${ififip} ${comout}/${NET}.t${cyc}z.bgifif${fhr}.${tmmark}.grib2
   wgrib2 ${comout}/${ififip} -s > ${comout}/${ififip}.idx
 fi
-ln_vrfy -sf --relative ${comout}/${testbed} ${comout}/${NET}.t${cyc}z.bgsfcf${fhr}.${tmmark}.grib2
 wgrib2 ${comout}/${testbed} -s > ${comout}/${testbed}.idx
 # Remap to additional output grids if requested
 
@@ -283,18 +268,6 @@ USHrrfs=$USHDIR/prdgen
 wgrib2 ${comout}/rrfs.t${cyc}z.prslev.f${fhr}.grib2 >& $DATAprdgen/prslevf${fhr}.txt
 
 # Create parm files for subsetting on the fly - do it for each forecast hour
-# 10 subpieces for North American grid
-sed -n -e '1,120p' $DATAprdgen/prslevf${fhr}.txt >& $DATAprdgen/namerica_1.txt
-sed -n -e '121,240p' $DATAprdgen/prslevf${fhr}.txt >& $DATAprdgen/namerica_2.txt
-sed -n -e '241,360p' $DATAprdgen/prslevf${fhr}.txt >& $DATAprdgen/namerica_3.txt
-sed -n -e '361,480p' $DATAprdgen/prslevf${fhr}.txt >& $DATAprdgen/namerica_4.txt
-sed -n -e '481,600p' $DATAprdgen/prslevf${fhr}.txt >& $DATAprdgen/namerica_5.txt
-sed -n -e '601,720p' $DATAprdgen/prslevf${fhr}.txt >& $DATAprdgen/namerica_6.txt
-sed -n -e '721,750p' $DATAprdgen/prslevf${fhr}.txt >& $DATAprdgen/namerica_7.txt
-sed -n -e '751,780p' $DATAprdgen/prslevf${fhr}.txt >& $DATAprdgen/namerica_8.txt
-sed -n -e '781,880p' $DATAprdgen/prslevf${fhr}.txt >& $DATAprdgen/namerica_9.txt
-sed -n -e '881,$p' $DATAprdgen/prslevf${fhr}.txt >& $DATAprdgen/namerica_10.txt
-
 # 4 subpieces for CONUS and Alaska grids
 sed -n -e '1,250p' $DATAprdgen/prslevf${fhr}.txt >& $DATAprdgen/conus_ak_1.txt
 sed -n -e '251,500p' $DATAprdgen/prslevf${fhr}.txt >& $DATAprdgen/conus_ak_2.txt
@@ -310,8 +283,8 @@ echo "#!/bin/bash" > $DATAprdgen/poescript_${fhr}
 echo "export DATA=${DATAprdgen}" >> $DATAprdgen/poescript_${fhr}
 echo "export comout=${comout}" >> $DATAprdgen/poescript_${fhr}
 
-tasks=(4 4 2 2 10)
-domains=(conus ak hi pr namerica)
+tasks=(4 4 2 2)
+domains=(conus ak hi pr)
 count=0
 for domain in ${domains[@]}
 do
@@ -331,13 +304,13 @@ chmod 775 $DATAprdgen/poescript_${fhr}
 #
 
 export CMDFILE=$DATAprdgen/poescript_${fhr}
-mpiexec -np 22 --cpu-bind core cfp $CMDFILE
+mpiexec -np 12 --cpu-bind core cfp $CMDFILE
 #export err=$?; err_chk
 
 # reassemble the output grids
 
-tasks=(4 4 2 2 10)
-domains=(conus ak hi pr namerica)
+tasks=(4 4 2 2)
+domains=(conus ak hi pr)
 count=0
 for domain in ${domains[@]}
 do
@@ -353,9 +326,24 @@ done
 mv ${comout}/rrfs.t${cyc}z.prslev.f${fhr}.conus.grib2 ${comout}/rrfs.t${cyc}z.prslev.f${fhr}.conus_3km.grib2
 mv ${comout}/rrfs.t${cyc}z.prslev.f${fhr}.conus.grib2.idx ${comout}/rrfs.t${cyc}z.prslev.f${fhr}.conus_3km.grib2.idx
 
+# create testbed files on 3-km CONUS grid
+prslev_conus=${net4}.t${cyc}z.prslev.f${fhr}.conus_3km.grib2
+testbed_conus=${net4}.t${cyc}z.testbed.f${fhr}.conus_3km.grib2
+if [[ ! -z ${TESTBED_FIELDS_FN} ]]; then
+  if [[ -f ${FIX_UPP}/${TESTBED_FIELDS_FN} ]]; then
+    wgrib2 ${comout}/${prslev_conus} | grep -F -f ${FIX_UPP}/${TESTBED_FIELDS_FN} | wgrib2 -i -grib ${comout}/${testbed_conus} ${comout}/${prslev_conus}
+  else
+    echo "${FIX_UPP}/${TESTBED_FIELDS_FN} not found"
+  fi
+fi
+
 else
   echo "this grid is not ready for parallel prdgen: ${PREDEF_GRID_NAME}"
 fi
+
+rm -fr $DATAprdgen
+rm -f $DATA/*.t${cyc}z.*.f${fhr}.*.grib2
+
 else
 #
 # use single core to process all addition grids.
@@ -413,26 +401,6 @@ if [ ${#ADDNL_OUTPUT_GRIDS[@]} -gt 0 ]; then
       mkdir -p ${comout}/${grid}_grid
       cp_vrfy ${bg_remap} ${comout}/${net4}.t${cyc}z.${leveltype}.f${fhr}.${grid}.grib2
       wgrib2 ${comout}/${net4}.t${cyc}z.${leveltype}.f${fhr}.${grid}.grib2 -s > ${comout}/${net4}.t${cyc}z.${leveltype}.f${fhr}.${grid}.grib2.idx
-
-      if [ $leveltype = 'prslev' ]; then
-         ln_vrfy -fs --relative ${comout}/${net4}.t${cyc}z.${leveltype}.f${fhr}.${grid}.grib2 ${comout}/${grid}_grid/${NET}.t${cyc}z.bgdawpf${fhr}.${tmmark}.grib2
-         ln_vrfy -fs --relative ${comout}/${net4}.t${cyc}z.${leveltype}.f${fhr}.${grid}.grib2 ${comout}/${grid}_grid/BGDAWP_${basetime}${post_fhr}
-      fi
-
-      if [ $leveltype = 'natlev' ]; then
-         ln_vrfy -fs --relative ${comout}/${net4}.t${cyc}z.${leveltype}.f${fhr}.${grid}.grib2 ${comout}/${grid}_grid/${NET}.t${cyc}z.bgrd3df${fhr}.${tmmark}.grib2
-         ln_vrfy -fs --relative ${comout}/${net4}.t${cyc}z.${leveltype}.f${fhr}.${grid}.grib2 ${comout}/${grid}_grid/BGRD3D_${basetime}${post_fhr}
-      fi
-
-      if [[ $leveltype = 'ififip' ]] && [[ -f ${comout}/${net4}.t${cyc}z.${leveltype}.f${fhr}.${grid}.grib2  ]]; then
-         ln_vrfy -fs --relative ${comout}/${net4}.t${cyc}z.${leveltype}.f${fhr}.${grid}.grib2 ${comout}/${grid}_grid/${NET}.t${cyc}z.bgifif${fhr}.${tmmark}.grib2
-         ln_vrfy -fs --relative ${comout}/${net4}.t${cyc}z.${leveltype}.f${fhr}.${grid}.grib2 ${comout}/${grid}_grid/BGIFI_${basetime}${post_fhr}
-      fi
-
-      if [ $leveltype = 'testbed' ]; then
-         ln_vrfy -fs --relative ${comout}/${net4}.t${cyc}z.${leveltype}.f${fhr}.${grid}.grib2 ${comout}/${grid}_grid/${NET}.t${cyc}z.bgsfcf${fhr}.${tmmark}.grib2
-         ln_vrfy -fs --relative ${comout}/${net4}.t${cyc}z.${leveltype}.f${fhr}.${grid}.grib2 ${comout}/${grid}_grid/BGSFC_${basetime}${post_fhr}
-      fi
 
     done
   done

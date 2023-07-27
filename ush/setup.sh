@@ -383,7 +383,7 @@ FHCYC_LSM_SPP_OR_NOT=0
 if [ "${DO_LSM_SPP}" = "TRUE" ]; then
   N_VAR_LNDP=${#LSM_SPP_VAR_LIST[@]}
   LNDP_TYPE=2
-  FHCYC_LSM_SPP_OR_NOT=999
+  FHCYC_LSM_SPP_OR_NOT=0
 fi
 #
 #-----------------------------------------------------------------------
@@ -491,6 +491,7 @@ optionList[21]=DO_SAVE_INPUT
 optionList[22]=DO_SDDACYCLE
 optionList[23]=DO_SAVE_DA_OUTPUT
 optionList[24]=DO_ENS_RADDA
+optionList[25]=DO_GSIDIAG_OFFLINE
 
 obs_number=${#optionList[@]}
 for (( i=0; i<${obs_number}; i++ ));
@@ -1207,6 +1208,7 @@ fi
 #
 GWD_HRRRsuite_DIR=""
 if [ "${CCPP_PHYS_SUITE}" = "FV3_HRRR" ] || \
+   [ "${CCPP_PHYS_SUITE}" = "FV3_HRRR_gf" ]  || \
    [ "${CCPP_PHYS_SUITE}" = "FV3_RAP" ]  || \
    [ "${CCPP_PHYS_SUITE}" = "FV3_GFS_v15_thompson_mynn_lam3km" ]; then
 #

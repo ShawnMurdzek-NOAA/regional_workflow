@@ -84,7 +84,7 @@ case $MACHINE in
   ulimit -s unlimited
   ulimit -a
   export FI_OFI_RXM_SAR_LIMIT=3145728
-  export OMP_STACKSIZE=1G
+  export OMP_STACKSIZE=500M
   export OMP_NUM_THREADS=${TPP_RUN_ANAL}
   ncores=$(( NNODES_RUN_ANAL*PPN_RUN_ANAL))
   APRUN="mpiexec -n ${ncores} -ppn ${PPN_RUN_ANAL} --cpu-bind core --depth ${OMP_NUM_THREADS}"
@@ -375,7 +375,7 @@ if [ ${regional_ensemble_option:-1} -eq 5 ]  && [ ${BKTYPE} != 1  ]; then
   print_info_msg "$VERBOSE" " Cycle ${YYYYMMDDHH}: GSI hybrid uses FV3LAM ensemble with n_ens=${nummem}" 
   echo " ${YYYYMMDDHH}(${cycle_type}): GSI hybrid uses FV3LAM ensemble with n_ens=${nummem}" >> ${EXPTDIR}/log.cycles
   grid_ratio_ens="1"
-  ens_fast_read=.true.
+  ens_fast_read=.false.
 else    
   nummem_gfs=$(more filelist03 | wc -l)
   nummem_gfs=$((nummem_gfs - 3 ))
@@ -546,6 +546,7 @@ fi
 # including satellite radiance data
 #
 #-----------------------------------------------------------------------
+if [[ ${gsi_type} == "OBSERVER" || ${anav_type} == "conv" || ${anav_type} == "conv_dbz" ]]; then
 if [ ${DO_RADDA} == "TRUE" ]; then
 
   obs_number=${#obs_files_source[@]}
@@ -609,6 +610,7 @@ if [ ${DO_RADDA} == "TRUE" ]; then
   obs_files_target[${obs_number}]=sevcsr
 
 fi
+fi
 
 obs_number=${#obs_files_source[@]}
 for (( i=0; i<${obs_number}; i++ ));
@@ -664,15 +666,14 @@ if [[ ${gsi_type} == "ANALYSIS" && ${anav_type} == "radardbz" ]]; then
   ens_v=${ens_v_radardbz}
   nsclgrp=1
   ngvarloc=1
-  i_ensloccov4tim=0
-  i_ensloccov4var=0
-  i_ensloccov4scl=0
+  r_ensloccov4tim=1.0
+  r_ensloccov4var=1.0
+  r_ensloccov4scl=1.0
   q_hyb_ens=.true.
   if_model_dbz=.true.
 fi
 if [[ ${gsi_type} == "ANALYSIS" && ${anav_type} == "conv_dbz" ]]; then
   ANAVINFO=${FIX_GSI}/${ANAVINFO_CONV_DBZ_FN}
-  beta1_inv=0.0
   if_model_dbz=.true.
 fi
 naensloc=`expr ${nsclgrp} \* ${ngvarloc} + ${nsclgrp} - 1`
@@ -1048,6 +1049,8 @@ fi
 #-----------------------------------------------------------------------
 #
 
+if [ ${DO_GSIDIAG_OFFLINE} == "FALSE" ]; then
+
 netcdf_diag=${netcdf_diag:-".false."}
 binary_diag=${binary_diag:-".true."}
 
@@ -1157,6 +1160,7 @@ if [ ${DO_RADDA} == "TRUE" ]; then
 
 fi
 
+fi # run diag inline (with GSI)
 #
 #-----------------------------------------------------------------------
 #

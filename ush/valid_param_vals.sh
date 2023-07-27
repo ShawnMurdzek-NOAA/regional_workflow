@@ -35,6 +35,7 @@ valid_vals_CCPP_PHYS_SUITE=( \
 "FV3_RRFS_v1beta" \
 "FV3_RRFS_v1alpha" \
 "FV3_HRRR" \
+"FV3_HRRR_gf" \
 "FV3_RAP" \
 "FV3_GFS_v15_thompson_mynn_lam3km" \
 ) 
@@ -63,6 +64,7 @@ valid_vals_DO_ENSPOST=("TRUE" "true" "YES" "yes" "FALSE" "false" "NO" "no")
 valid_vals_DO_ENSINIT=("TRUE" "true" "YES" "yes" "FALSE" "false" "NO" "no")
 valid_vals_DO_SAVE_INPUT=("TRUE" "true" "YES" "yes" "FALSE" "false" "NO" "no")
 valid_vals_DO_SAVE_DA_OUTPUT=("TRUE" "true" "YES" "yes" "FALSE" "false" "NO" "no")
+valid_vals_DO_GSIDIAG_OFFLINE=("TRUE" "true" "YES" "yes" "FALSE" "false" "NO" "no")
 valid_vals_DO_ENSFCST=("TRUE" "true" "YES" "yes" "FALSE" "false" "NO" "no")
 valid_vals_DO_DACYCLE=("TRUE" "true" "YES" "yes" "FALSE" "false" "NO" "no")
 valid_vals_DO_SDDACYCLE=("TRUE" "true" "YES" "yes" "FALSE" "false" "NO" "no")

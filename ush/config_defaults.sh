@@ -2412,10 +2412,13 @@ CLEAN_NWGES_HRS="72"
 # Parameters for RRFS OSSE configuration
 # DO_OSSE:
 #   Sets observation paths to point to directories with synthetic obs
+# USE_REAL_RED:
+#   Sets observation paths to point to ob BUFR files with real, reduced obs
 # OSSE_PERIOD:
 #   OSSE period ("spring" or "winter")
 #-----------------------------------------------------------------------
 #
 
 DO_OSSE="FALSE"
+USE_REAL_RED="FALSE"
 OSSE_PERIOD="spring"

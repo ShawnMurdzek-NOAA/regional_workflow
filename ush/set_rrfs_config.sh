@@ -128,6 +128,11 @@ if [[ $DO_RETRO == "TRUE" ]] ; then
       OBSPATH_NSSLMOSIAC=/work2/noaa/wrfruc/murdzek/nature_run_${OSSE_PERIOD}
       LIGHTNING_ROOT=/work2/noaa/wrfruc/murdzek/nature_run_${OSSE_PERIOD}
       IMSSNOW_ROOT="/work2/noaa/wrfruc/murdzek/nature_run_${OSSE_PERIOD}/synthetic_ims"
+    elif [[ ${USE_REAL_RED} == "TRUE" ]]; then
+      OBSPATH=/work2/noaa/wrfruc/murdzek/nature_run_${OSSE_PERIOD}/real_red_obs_bufr
+      OBSPATH_NSSLMOSIAC=/work2/noaa/wrfruc/murdzek/nature_run_${OSSE_PERIOD}
+      LIGHTNING_ROOT=/work2/noaa/wrfruc/murdzek/nature_run_${OSSE_PERIOD}
+      IMSSNOW_ROOT="/work2/noaa/wrfruc/murdzek/RRFS_input_data/snow/ims96/grib2"
     else
       OBSPATH=/work2/noaa/wrfruc/murdzek/real_obs/obs_rap_prepbufr
       OBSPATH_NSSLMOSIAC=/work2/noaa/wrfruc/murdzek/real_obs

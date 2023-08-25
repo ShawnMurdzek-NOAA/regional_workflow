@@ -3175,7 +3175,7 @@ MODULES_RUN_TASK_FP script.
   </task>
 {%- endif %}
 
-{%- if machine in ["JET", "HERA"]  %}
+{%- if machine in ["JET", "HERA", "ORION"]  %}
 {%- if not do_ensemble %}
 <!--
 ************************************************************************

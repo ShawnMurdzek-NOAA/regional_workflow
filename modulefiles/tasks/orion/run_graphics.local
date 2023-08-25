@@ -1,0 +1,10 @@
+#%Module
+
+module purge
+
+module unload python
+module use -a /apps/contrib/miniconda3-noaa-gsl/modulefiles
+module load miniconda3/3.8
+
+# Note that we can't use the shared pygraf environment in contrib b/c it does not include the Dask package.
+setenv SRW_ENV /work2/noaa/wrfruc/murdzek/conda/my_pygraf

@@ -149,12 +149,16 @@ if [[ $DO_RETRO == "TRUE" ]] ; then
   if [[ $MACHINE == "wcoss2" ]] ; then
     RETRODATAPATH="/lfs/h2/emc/lam/noscrub/emc.lam/rrfs_retro_data"
     if [[ ${DO_ENSEMBLE} == "TRUE" ]]; then
-      if [[ ${EXTRN_MDL_NAME_ICS} == "GDASENKF" ]]; then
+      if [[ ${EXTRN_MDL_NAME_ICS} == "GEFS" ]]; then
+        EXTRN_MDL_SOURCE_BASEDIR_ICS="${RETRODATAPATH}/GEFS/dsg"
+      elif [[ ${EXTRN_MDL_NAME_ICS} == "GDASENKF" ]]; then
         EXTRN_MDL_SOURCE_BASEDIR_ICS="${RETRODATAPATH}/enkf/atm"
       elif [[ ${EXTRN_MDL_NAME_ICS} == "FV3GFS" ]]; then
         EXTRN_MDL_SOURCE_BASEDIR_ICS="${RETRODATAPATH}/gfs/0p25deg/grib2"
       fi
-      if [[ ${EXTRN_MDL_NAME_LBCS} == "GDASENKF" ]]; then
+      if [[ ${EXTRN_MDL_NAME_LBCS} == "GEFS" ]]; then
+        EXTRN_MDL_SOURCE_BASEDIR_LBCS="${RETRODATAPATH}/GEFS/dsg"
+      elif [[ ${EXTRN_MDL_NAME_LBCS} == "GDASENKF" ]]; then
         EXTRN_MDL_SOURCE_BASEDIR_LBCS="${RETRODATAPATH}/enkf/atm"
       elif [[ ${EXTRN_MDL_NAME_LBCS} == "FV3GFS" ]]; then
         EXTRN_MDL_SOURCE_BASEDIR_LBCS="${RETRODATAPATH}/gfs/0p25deg/grib2"
@@ -164,7 +168,7 @@ if [[ $DO_RETRO == "TRUE" ]] ; then
       EXTRN_MDL_SOURCE_BASEDIR_LBCS=${RETRODATAPATH}/gfs
     fi
     OBSPATH=${RETRODATAPATH}/obs_rap
-    OBSPATH_NSSLMOSIAC=${RETRODATAPATH}/reflectivity
+    OBSPATH_NSSLMOSIAC=${RETRODATAPATH}/reflectivity/upperair/mrms/conus/MergedReflectivityQC/
     LIGHTNING_ROOT=${RETRODATAPATH}/lightning
     ENKF_FCST=${RETRODATAPATH}/enkf/atm
     AIRCRAFT_REJECT="${RETRODATAPATH}/amdar_reject_lists"
@@ -172,6 +176,7 @@ if [[ $DO_RETRO == "TRUE" ]] ; then
     SST_ROOT="${RETRODATAPATH}/highres_sst"
     GVF_ROOT="${RETRODATAPATH}/gvf/grib2"
     IMSSNOW_ROOT="${RETRODATAPATH}/snow/ims96/grib2"
+    RAPHRR_SOIL_ROOT="/lfs/h2/emc/lam/noscrub/emc.lam/rrfs_retro_data/rap_hrrr_soil"
   fi
 fi
 

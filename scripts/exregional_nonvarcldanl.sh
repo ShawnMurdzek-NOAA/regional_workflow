@@ -345,13 +345,12 @@ fi
 #
 #-----------------------------------------------------------------------
 #
+if [ ${BKTYPE} -eq 0 ]; then
 $APRUN ./${exect} > stdout 2>&1 || print_err_msg_exit "\
 Call to executable to run No Var Cloud Analysis returned with nonzero exit code."
 cp stdout ${comout}/stdout.t${HH}z.nonvarcloudanalysis
-for fcld in stdout_cloudanalysis.*
-do
-    cp ${fcld} ${comout}/stdout.t${HH}z.nonvar${fcld:7}
-done
+cat stdout_cloudanalysis.* > ${comout}/stdout.t${HH}z.nonvarcloudanalysis.all
+fi
 #
 #-----------------------------------------------------------------------
 #

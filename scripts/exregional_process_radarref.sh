@@ -95,7 +95,7 @@ case $MACHINE in
   APRUN="srun"
   ;;
 #
-"ORION")
+"ORION" | "HERCULES")
   ulimit -s unlimited
   APRUN="srun"
   ;;
@@ -216,7 +216,7 @@ case $MACHINE in
 
   obs_appendix=grib2.gz
   ;;
-"JET" | "HERA" | "ORION")
+"JET" | "HERA" | "ORION" | "HERCULES")
 
   obs_appendix=grib2
 esac

@@ -107,7 +107,7 @@ if [[ $DO_RETRO == "TRUE" ]] ; then
     IMSSNOW_ROOT="/scratch2/BMC/zrtrr/rli/data/snow/ims96/grib2"
     RAPHRR_SOIL_ROOT="/scratch2/BMC/zrtrr/rli/data/rap_hrrr_soil"
   fi
-  if [[ $MACHINE == "orion" ]] ; then
+  if [[ $MACHINE == "orion" || $MACHINE == "hercules" ]] ; then
     if [[ ${DO_ENSEMBLE} == "TRUE" ]]; then
       if [[ ${EXTRN_MDL_NAME_ICS} == "GDASENKF" ]]; then
         EXTRN_MDL_SOURCE_BASEDIR_ICS="/work2/noaa/wrfruc/murdzek/RRFS_input_data/enkf/atm"
@@ -129,7 +129,7 @@ if [[ $DO_RETRO == "TRUE" ]] ; then
       LIGHTNING_ROOT=/work2/noaa/wrfruc/murdzek/nature_run_${OSSE_PERIOD}
       IMSSNOW_ROOT="/work2/noaa/wrfruc/murdzek/nature_run_${OSSE_PERIOD}/obs/synthetic_ims"
     elif [[ ${USE_REAL_RED} == "TRUE" ]]; then
-      OBSPATH=/work2/noaa/wrfruc/murdzek/nature_run_${OSSE_PERIOD}/obs/
+      OBSPATH=/work2/noaa/wrfruc/murdzek/nature_run_${OSSE_PERIOD}/obs/perfect_conv_v2/real_red_bufr
       OBSPATH_NSSLMOSIAC=/work2/noaa/wrfruc/murdzek/nature_run_${OSSE_PERIOD}
       LIGHTNING_ROOT=/work2/noaa/wrfruc/murdzek/nature_run_${OSSE_PERIOD}
       IMSSNOW_ROOT="/work2/noaa/wrfruc/murdzek/RRFS_input_data/snow/ims96/grib2"

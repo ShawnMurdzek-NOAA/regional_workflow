@@ -115,6 +115,10 @@ case "$MACHINE" in
     . /apps/lmod/lmod/init/sh
     ;;
 #
+  "HERCULES")
+    . /apps/other/lmod/lmod/init/sh
+    ;;
+#
   "JET")
     . /apps/lmod/lmod/init/sh
     ;;
@@ -320,7 +324,11 @@ ules_dir) for the specified task (task_name) failed:
 
 if [ -n "${SRW_ENV:-}" ] ; then
   set +u
-  conda activate ${SRW_ENV}
+  if [ ${MACHINE} == "HERCULES" ]; then
+    source activate ${SRW_ENV}
+  else
+    conda activate ${SRW_ENV}
+  fi
   set -u
 fi
 

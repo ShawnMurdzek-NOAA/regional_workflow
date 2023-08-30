@@ -730,7 +730,7 @@ PTMP=\"${PTMP}\""
       extrn_mdl_source_basedir="/mnt/lfs1/BMC/fim/Gerard.Ketefian/UFS_CAM/staged_extrn_mdl_files"
     elif [ "$MACHINE" = "CHEYENNE" ]; then
       extrn_mdl_source_basedir="/glade/p/ral/jntp/UFS_CAM/staged_extrn_mdl_files"
-    elif [ "$MACHINE" = "ORION" ]; then
+    elif [ "$MACHINE" = "ORION" ] || [ "$MACHINE" = "HERCULES" ]; then
       extrn_mdl_source_basedir="/work/noaa/gsd-fv3-dev/gsketefia/UFS/staged_extrn_mdl_files"
     else
       print_err_msg_exit "\

@@ -107,7 +107,7 @@ case $MACHINE in
     APRUN="time"
     ;;
 
-  "ORION")
+  "ORION" | "HERCULES")
     APRUN="time"
     ;;
 

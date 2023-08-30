@@ -48,6 +48,17 @@ if [[ $MACHINE == "orion" ]] ; then
   NCORES_PER_NODE=24
 fi
 
+if [[ $MACHINE == "hercules" ]] ; then
+  ACCOUNT=wrfruc
+  PARTITION_ANALYSIS=hercules
+  PARTITION_GRAPHICS=hercules
+  QUEUE_ANALYSIS="batch"
+  QUEUE_PRDGEN="batch"
+  QUEUE_GRAPHICS="batch"
+  QUEUE_POST="batch"
+  NCORES_PER_NODE=24
+fi
+
 if [[ $MACHINE == "wcoss2" ]] ; then
   ACCOUNT=RRFS-DEV
   HPSS_ACCOUNT="RRFS-DEV"
@@ -247,7 +258,7 @@ if [[ ${PREDEF_GRID_NAME} == "RRFS_CONUS_3km" ]] ; then
 
   fi
 
-  if [[ $MACHINE == "orion" ]] ; then
+  if [[ $MACHINE == "orion" || $MACHINE == "hercules" ]] ; then
     LAYOUT_X="30"
     LAYOUT_Y="40"
     PPN_RUN_FCST="40"
@@ -340,7 +351,7 @@ if [[ ${PREDEF_GRID_NAME} == "RRFS_CONUS_13km" ]] ; then
     FV3GFS_FILE_FMT_LBCS="netcdf"
   fi
 
-  if [[ $MACHINE == "orion" ]] ; then
+  if [[ $MACHINE == "orion" || $MACHINE == "hercules" ]] ; then
     LAYOUT_X="30"
     LAYOUT_Y="40"
     PPN_RUN_FCST="40"

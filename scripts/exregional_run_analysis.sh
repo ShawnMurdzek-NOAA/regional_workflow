@@ -106,7 +106,7 @@ case $MACHINE in
   APRUN="srun"
   ;;
 #
-"ORION")
+"ORION" | "HERCULES")
   ulimit -s unlimited
   ulimit -a
   export OMP_NUM_THREADS=1
@@ -301,7 +301,7 @@ if  [[ ${regional_ensemble_option:-1} -eq 1 || ${l_both_fv3sar_gfs_ens} = ".true
     fi
 
     ;;
-  "JET" | "HERA" | "ORION" )
+  "JET" | "HERA" | "ORION" | "HERCULES")
 
     for loop in $loops; do
       for timelist in $(ls ${ENKF_FCST}/*.gdas.t*z.atmf${loop}.mem080.${ftype}); do
@@ -482,7 +482,7 @@ else
      obsfileprefix=${YYYYMMDDHH}.${obs_source}
      obspath_tmp=${OBSPATH}
     ;;
-  "ORION" )
+  "ORION" | "HERCULES")
      obs_source=rap
      obsfileprefix=${YYYYMMDDHH}.${obs_source}               # rap observation from JET.
      #obsfileprefix=${obs_source}.${YYYYMMDD}/${obs_source}    # observation from operation.

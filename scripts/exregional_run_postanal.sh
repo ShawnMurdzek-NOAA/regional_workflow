@@ -106,7 +106,7 @@ case $MACHINE in
   APRUN="srun"
   ;;
 #
-"ORION")
+"ORION" | "HERCULES")
   ulimit -s unlimited
   ulimit -a
   export OMP_NUM_THREADS=1

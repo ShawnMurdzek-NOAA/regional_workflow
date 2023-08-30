@@ -59,7 +59,7 @@ else
     "HERA")
       EXTRN_MDL_SYSBASEDIR_ICS=""
       ;;
-    "ORION")
+    "ORION" | "HERCULES")
       EXTRN_MDL_SYSBASEDIR_ICS=""
       ;;
     "JET")
@@ -85,7 +85,7 @@ else
     "HERA")
       EXTRN_MDL_SYSBASEDIR_ICS="/scratch1/NCEPDEV/rstprod/com/gfs/prod"
       ;;
-    "ORION")
+    "ORION" | "HERCULES")
       EXTRN_MDL_SYSBASEDIR_ICS=""
       ;;
     "JET")
@@ -136,7 +136,7 @@ else
     "HERA")
       EXTRN_MDL_SYSBASEDIR_ICS="/scratch2/BMC/public/data/gsd/rap/full/wrfnat"
       ;;
-    "ORION")
+    "ORION" | "HERCULES")
       EXTRN_MDL_SYSBASEDIR_ICS=""
       ;;
     "JET")
@@ -153,7 +153,7 @@ else
     "HERA")
       EXTRN_MDL_SYSBASEDIR_ICS="/scratch2/BMC/public/data/gsd/hrrr/conus/wrfnat"
       ;;
-    "ORION")
+    "ORION" | "HERCULES")
       EXTRN_MDL_SYSBASEDIR_ICS=""
       ;;
     "JET")
@@ -261,7 +261,7 @@ else
     "HERA")
       EXTRN_MDL_SYSBASEDIR_LBCS=""
       ;;
-    "ORION")
+    "ORION" | "HERCULES")
       EXTRN_MDL_SYSBASEDIR_LBCS=""
       ;;
     "JET")
@@ -287,7 +287,7 @@ else
     "HERA")
       EXTRN_MDL_SYSBASEDIR_LBCS="/scratch1/NCEPDEV/rstprod/com/gfs/prod"
       ;;
-    "ORION")
+    "ORION" | "HERCULES")
       EXTRN_MDL_SYSBASEDIR_LBCS=""
       ;;
     "JET")
@@ -335,7 +335,7 @@ else
     "HERA")
       EXTRN_MDL_SYSBASEDIR_LBCS="/scratch2/BMC/public/data/gsd/rap/full/wrfnat"
       ;;
-    "ORION")
+    "ORION" | "HERCULES")
       EXTRN_MDL_SYSBASEDIR_LBCS=""
       ;;
     "JET")
@@ -352,7 +352,7 @@ else
     "HERA")
       EXTRN_MDL_SYSBASEDIR_LBCS="/scratch2/BMC/public/data/gsd/hrrr/conus/wrfnat"
       ;;
-    "ORION")
+    "ORION" | "HERCULES")
       EXTRN_MDL_SYSBASEDIR_LBCS=""
       ;;
     "JET")

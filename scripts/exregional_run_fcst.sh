@@ -129,7 +129,7 @@ case $MACHINE in
     fi
     ;;
 
-  "ORION")
+  "ORION" | "HERCULES")
     ulimit -s unlimited
     ulimit -a
     APRUN="srun"

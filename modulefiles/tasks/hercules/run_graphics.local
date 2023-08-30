@@ -1,0 +1,8 @@
+#%Module
+
+module purge
+
+module unload python
+module load miniconda3/4.10.3
+
+setenv SRW_ENV /work2/noaa/wrfruc/murdzek/conda/my_pygraf

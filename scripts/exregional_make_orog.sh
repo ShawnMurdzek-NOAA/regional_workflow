@@ -109,7 +109,7 @@ case $MACHINE in
     APRUN="time"
     ;;
 
-  "ORION")
+  "ORION" | "HERCULES")
     ulimit -s unlimited
     ulimit -a
     APRUN="time"

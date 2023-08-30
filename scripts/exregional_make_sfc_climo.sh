@@ -137,7 +137,7 @@ case $MACHINE in
     APRUN="srun"
     ;;
 
-  "ORION")
+  "ORION" | "HERCULES")
     APRUN="srun"
     ;;
 

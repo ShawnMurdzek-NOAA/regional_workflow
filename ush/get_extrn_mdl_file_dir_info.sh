@@ -393,7 +393,7 @@ fi
 #        fns=( "gfs.t${hh}z.pgrb2.0p25.anl" )  # Get only 0.25 degree files for now.
 #        fns=( "gfs.t${hh}z.pgrb2.0p25.f000" )  # Get only 0.25 degree files for now.
 
-        if [ "${MACHINE}" = "JET" ] || [ "${MACHINE}" = "ORION" ]; then
+        if [ "${MACHINE}" = "JET" ] || [ "${MACHINE}" = "ORION" ] || [ "${MACHINE}" = "HERCULES" ]; then
           fns_on_disk=( "${yy}${ddd}${hh}0${fcst_mn}0${fcst_hh}" )
         elif [ "${MACHINE}" = "HERA" ] ; then
           #fns_on_disk=( "gfs.t${hh}z.pgrb2.0p25.f0${fcst_hh}" )
@@ -419,7 +419,7 @@ fi
       elif [ "${MACHINE}" = "JET" ] ; then
         fns_on_disk=( "${yy}${ddd}${hh}${mn}.gdas.t${hh}z.atmf0${fcst_hh}.${GDAS_MEM_NAME}.nc" "${yy}${ddd}${hh}${mn}.gdas.t${hh}z.sfcf0${fcst_hh}.${GDAS_MEM_NAME}.nc")  # use netcdf
         fns_in_arcv=( "gdas.t${hh}z.atmf0${fcst_hh}.nc" "gdas.t${hh}z.sfcf0${fcst_hh}.nc")  # use netcdf
-      elif [ "${MACHINE}" = "ORION" ] ; then
+      elif [ "${MACHINE}" = "ORION" ] || [ "${MACHINE}" = "HERCULES" ]; then
         fns_on_disk=( "${yy}${ddd}${hh}${mn}.gdas.t${hh}z.atmf0${fcst_hh}.${GDAS_MEM_NAME}.nc" "${yy}${ddd}${hh}${mn}.gdas.t${hh}z.sfcf0${fcst_hh}.${GDAS_MEM_NAME}.nc")  # use netcdf
         fns_in_arcv=( "gdas.t${hh}z.atmf0${fcst_hh}.nc" "gdas.t${hh}z.sfcf0${fcst_hh}.nc")  # use netcdf
       fi
@@ -521,7 +521,7 @@ and analysis or forecast (anl_or_fcst):
 
         fcst_hhh=( $( printf "%03d " "${lbc_spec_fhrs[@]}" ) )
 
-        if [ "${MACHINE}" = "JET" ] || [ "${MACHINE}" = "ORION" ] || [ "${MACHINE}" = "HERA" ]; then
+        if [ "${MACHINE}" = "JET" ] || [ "${MACHINE}" = "ORION" ] || [ "${MACHINE}" = "HERA" ] || [ "${MACHINE}" = "HERCULES" ]; then
           prefix=( "${yy}${ddd}${hh}${fcst_mn}0" )
           fns_on_disk=( "${fcst_hhh[@]/#/$prefix}" )
         else
@@ -551,7 +551,7 @@ and analysis or forecast (anl_or_fcst):
       elif  [ "${MACHINE}" = "JET" ]; then
         fns_on_disk=( "${yy}${ddd}${hh}${mn}.gdas.t${hh}z.atmf0${fcst_hh}.${GDAS_MEM_NAME}.nc" "${yy}${ddd}${hh}${mn}.gdas.t${hh}z.sfcf0${fcst_hh}.${GDAS_MEM_NAME}.nc")  # use netcdf
         fns_in_arcv=( "gdas.t${hh}z.atmf${fcst_hhh}.nc" "gdas.t${hh}z.sfcf${fcst_hhh}.nc" )  #  for now.
-      elif  [ "${MACHINE}" = "ORION" ]; then
+      elif  [ "${MACHINE}" = "ORION" ] || [ "${MACHINE}" = "HERCULES" ]; then
         fns_on_disk=( "${yy}${ddd}${hh}${mn}.gdas.t${hh}z.atmf0${fcst_hh}.${GDAS_MEM_NAME}.nc" "${yy}${ddd}${hh}${mn}.gdas.t${hh}z.sfcf0${fcst_hh}.${GDAS_MEM_NAME}.nc")  # use netcdf
         fns_in_arcv=( "gdas.t${hh}z.atmf${fcst_hhh}.nc" "gdas.t${hh}z.sfcf${fcst_hhh}.nc" )  #  for now.
       fi
@@ -664,7 +664,7 @@ bination of external model (extrn_mdl_name) and analysis or forecast
     "HERA")
       sysdir=""
       ;;
-    "ORION")
+    "ORION" | "HERCULES")
       sysdir="$sysbasedir"
       ;;
     "JET")
@@ -703,7 +703,7 @@ has not been specified for this external model and machine combination:
       sysdir="$sysbasedir"
       #sysdir="$sysbasedir/gfs.${yyyymmdd}/${hh}/atmos"
       ;;
-    "ORION")
+    "ORION" | "HERCULES")
       sysdir="$sysbasedir"
       #sysdir="$sysbasedir/gdas.${yyyymmdd}/${hh}/atmos"
       ;;
@@ -737,7 +737,7 @@ has not been specified for this external model and machine combination:
     "JET")
        sysdir="$sysbasedir"
        ;;
-    "ORION")
+    "ORION" | "HERCULES")
        sysdir="$sysbasedir"
        ;;
     *)
@@ -802,7 +802,7 @@ has not been specified for this external model and machine combination:
     "HERA")
       sysdir="$sysbasedir"
       ;;
-    "ORION")
+    "ORION" | "HERCULES")
       sysdir="$sysbasedir"
       ;;
     "JET")
@@ -833,7 +833,7 @@ has not been specified for this external model and machine combination:
     "HERA")
       sysdir="$sysbasedir"
       ;;
-    "ORION")
+    "ORION" | "HERCULES")
       sysdir="$sysbasedir"
       ;;
     "JET")
@@ -863,7 +863,7 @@ has not been specified for this external model and machine combination:
     "HERA")
       sysdir="$sysbasedir"
       ;;
-    "ORION")
+    "ORION" | "HERCULES")
       sysdir="$sysbasedir"
       ;;
     "JET")

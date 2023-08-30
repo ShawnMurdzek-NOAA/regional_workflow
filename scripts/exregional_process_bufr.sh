@@ -94,7 +94,7 @@ case $MACHINE in
   APRUN="srun"
   ;;
 #
-"ORION")
+"ORION" | "HERCULES")
   ulimit -s unlimited
   APRUN="srun"
   ;;
@@ -195,7 +195,7 @@ else
     fi
 
     ;;
-  "JET" | "HERA" | "ORION")
+  "JET" | "HERA" | "ORION" | "HERCULES")
 
     obsfileprefix=${YYYYMMDDHH}.${obs_source}
     obspath_tmp=${OBSPATH}

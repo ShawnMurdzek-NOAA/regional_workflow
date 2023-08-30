@@ -94,7 +94,7 @@ expt_name="${EXPT_SUBDIR}"
 if [ "$MACHINE" = "CHEYENNE" ]; then
   module use -a /glade/p/ral/jntp/UFS_SRW_app/modules/
   module load rocoto
-elif [ "$MACHINE" = "ORION" ]; then
+elif [ "$MACHINE" = "ORION" ] || [ "${MACHINE}" = "HERCULES" ]; then
   module load contrib rocoto
 elif [ "$MACHINE" = "WCOSS2" ]; then
   module purge

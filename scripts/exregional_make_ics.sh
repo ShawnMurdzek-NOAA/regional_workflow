@@ -95,7 +95,7 @@ case "$MACHINE" in
     APRUN="srun"
     ;;
 
-  "ORION")
+  "ORION" | "HERCULES")
     ulimit -s unlimited
     APRUN="srun"
     ;;

@@ -88,6 +88,7 @@ case $MACHINE in
   export OMP_NUM_THREADS=1
   ncores=$(( NNODES_RUN_POSTANAL*PPN_RUN_POSTANAL))
   APRUN="mpiexec -n ${ncores} -ppn ${PPN_RUN_POSTANAL} --cpu-bind core --depth ${OMP_NUM_THREADS}"
+  IO_LAYOUT_Y_IN=${IO_LAYOUT_Y}
   ;;
 #
 "THEIA")
@@ -96,6 +97,7 @@ case $MACHINE in
   ulimit -a
   np=${SLURM_NTASKS}
   APRUN="mpirun"
+  IO_LAYOUT_Y_IN=${IO_LAYOUT_Y}
   ;;
 #
 "HERA")
@@ -104,6 +106,7 @@ case $MACHINE in
   export OMP_NUM_THREADS=1
   export OMP_STACKSIZE=300M
   APRUN="srun"
+  IO_LAYOUT_Y_IN=${IO_LAYOUT_Y}
   ;;
 #
 "ORION" | "HERCULES")
@@ -112,6 +115,7 @@ case $MACHINE in
   export OMP_NUM_THREADS=1
   export OMP_STACKSIZE=1024M
   APRUN="srun"
+  IO_LAYOUT_Y_IN=1
   ;;
 #
 "JET")
@@ -120,6 +124,7 @@ case $MACHINE in
   ulimit -s unlimited
   ulimit -a
   APRUN="srun"
+  IO_LAYOUT_Y_IN=${IO_LAYOUT_Y}
   ;;
 #
 "ODIN")
@@ -129,6 +134,7 @@ case $MACHINE in
   ulimit -s unlimited
   ulimit -a
   APRUN="srun"
+  IO_LAYOUT_Y_IN=${IO_LAYOUT_Y}
   ;;
 #
 esac
@@ -190,7 +196,7 @@ fi
 #
 if [ ${BKTYPE} -eq 0 ] && [ ${ob_type} == "conv" ] && [ "${DO_SOIL_ADJUST}" = "TRUE" ]; then  # warm start
   cd ${bkpath}
-  if [ "${IO_LAYOUT_Y}" == "1" ]; then
+  if [ "${IO_LAYOUT_Y_IN}" == "1" ]; then
     ln_vrfy -snf ${fixgriddir}/fv3_grid_spec                fv3_grid_spec
   else
     for ii in ${list_iolayout}
@@ -202,7 +208,7 @@ if [ ${BKTYPE} -eq 0 ] && [ ${ob_type} == "conv" ] && [ "${DO_SOIL_ADJUST}" = "T
 
 cat << EOF > namelist.soiltq
  &setup
-  fv3_io_layout_y=${IO_LAYOUT_Y},
+  fv3_io_layout_y=${IO_LAYOUT_Y_IN},
   iyear=${YYYY},
   imonth=${MM},
   iday=${DD},
@@ -241,7 +247,7 @@ if [ ${BKTYPE} -eq 0 ] && [ "${DO_UPDATE_BC}" = "TRUE" ]; then  # warm start
 
 cat << EOF > namelist.updatebc
  &setup
-  fv3_io_layout_y=${IO_LAYOUT_Y},
+  fv3_io_layout_y=${IO_LAYOUT_Y_IN},
   bdy_update_type=1,
   grid_type_fv3_regional=2,
  /

@@ -81,23 +81,27 @@ case $MACHINE in
   ulimit -a
   ncores=$(( NNODES_PROC_RADAR*PPN_PROC_RADAR))
   APRUN="mpiexec -n ${ncores} -ppn ${PPN_PROC_RADAR}"
+  IO_LAYOUT_Y_IN=${IO_LAYOUT_Y}
   ;;
 #
 "HERA")
   ulimit -s unlimited
   ulimit -a
   APRUN="srun"
+  IO_LAYOUT_Y_IN=${IO_LAYOUT_Y}
   ;;
 #
 "JET")
   ulimit -s unlimited
   ulimit -a
   APRUN="srun"
+  IO_LAYOUT_Y_IN=${IO_LAYOUT_Y}
   ;;
 #
 "ORION" | "HERCULES")
   ulimit -s unlimited
   APRUN="srun"
+  IO_LAYOUT_Y_IN=1
   ;;
 #
 "ODIN")
@@ -107,6 +111,7 @@ case $MACHINE in
   ulimit -s unlimited
   ulimit -a
   APRUN="srun -n 36"
+  IO_LAYOUT_Y_IN=${IO_LAYOUT_Y}
   ;;
 #
 esac
@@ -156,7 +161,7 @@ else
   done
 fi
 
-n_iolayouty=$(($IO_LAYOUT_Y-1))
+n_iolayouty=$(($IO_LAYOUT_Y_IN-1))
 list_iolayout=$(seq 0 $n_iolayouty)
 
 #
@@ -191,7 +196,7 @@ for bigmin in ${RADARREFL_TIMELEVEL[@]}; do
   if [ ${BKTYPE} -eq 1 ]; then
     cp_vrfy ${fixgriddir}/fv3_grid_spec          fv3sar_grid_spec.nc
   else
-    if [ "${IO_LAYOUT_Y}" == "1" ]; then
+    if [ "${IO_LAYOUT_Y_IN}" == "1" ]; then
       cp_vrfy ${fixgriddir}/fv3_grid_spec          fv3sar_grid_spec.nc
     else
       for ii in $list_iolayout
@@ -301,7 +306,7 @@ esac
 if [ ${BKTYPE} -eq 1 ]; then
   n_iolayouty=1
 else
-  n_iolayouty=$(($IO_LAYOUT_Y))
+  n_iolayouty=$(($IO_LAYOUT_Y_IN))
 fi
 
 cat << EOF > namelist.mosaic

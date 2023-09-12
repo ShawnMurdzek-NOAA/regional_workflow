@@ -78,6 +78,26 @@ print_input_args valid_args
 #
 #-----------------------------------------------------------------------
 #
+# Set to use mppnccombine
+#
+#-----------------------------------------------------------------------
+#
+case $MACHINE in
+
+  "ORION")
+    DO_IO_COMBINE="TRUE"
+    IO_LAYOUT_Y_IN=1
+    ;;
+
+  *)
+    DO_IO_COMBINE="FALSE"
+    IO_LAYOUT_Y_IN=${IO_LAYOUT_Y}
+    ;;
+
+esac
+#
+#-----------------------------------------------------------------------
+#
 # Get the cycle date and hour (in formats of yyyymmdd and hh, respectively)
 # from cdate.
 #
@@ -106,7 +126,7 @@ save_hh=${save_time:8:2}
 filelist="fv_core.res.nc coupler.res"
 filelistn="fv_core.res.tile1.nc fv_srf_wnd.res.tile1.nc fv_tracer.res.tile1.nc phy_data.nc sfc_data.nc"
 filelistcold="gfs_data.tile7.halo0.nc sfc_data.tile7.halo0.nc"
-n_iolayouty=$(($IO_LAYOUT_Y-1))
+n_iolayouty=$(($IO_LAYOUT_Y_IN-1))
 list_iolayout=$(seq 0 $n_iolayouty)
 
 if [[ ${cycle_subtype} == "ensinit" ]] ; then
@@ -123,7 +143,14 @@ if [ ! -r ${nwges_dir}/INPUT/gfs_ctrl.nc ]; then
 fi
 
 if [ -r "$run_dir/RESTART/${restart_prefix}.coupler.res" ]; then
-  if [ "${IO_LAYOUT_Y}" == "1" ]; then
+  if [ "${DO_IO_COMBINE}" == "TRUE" ] && [ "${IO_LAYOUT_Y}" != "1" ]; then
+    for file in ${filelistn}; do
+      ${EXECDIR}/mppnccombine -v -n4 -r $run_dir/RESTART/${restart_prefix}.${file}_tmp $run_dir/RESTART/${restart_prefix}.${file}.????
+      nccopy -4 $run_dir/RESTART/${restart_prefix}.${file}_tmp $run_dir/RESTART/${restart_prefix}.${file}
+      rm -f $run_dir/RESTART/${restart_prefix}.${file}_tmp
+    done
+  fi
+  if [ "${IO_LAYOUT_Y_IN}" == "1" ]; then
     for file in ${filelistn}; do
       mv_vrfy $run_dir/RESTART/${restart_prefix}.${file} ${nwges_dir}/RESTART/${restart_prefix}.${file}
     done
@@ -156,7 +183,14 @@ else
                  ( \"${FCST_LEN_HRS_thiscycle}\") "
 
   if [ -r "$run_dir/RESTART/${restart_prefix}.coupler.res" ] && ([ ${fhr} -eq ${FCST_LEN_HRS_thiscycle} ] || [ ${cycle_subtype} == "ensinit" ]) ; then
-    if [ "${IO_LAYOUT_Y}" == "1" ]; then
+    if [ "${DO_IO_COMBINE}" == "TRUE" ] && [ "${IO_LAYOUT_Y}" != "1" ]; then
+      for file in ${filelistn}; do
+        ${EXECDIR}/mppnccombine -v -n4 -r $run_dir/RESTART/${file}_tmp $run_dir/RESTART/${file}.????
+        nccopy -4 $run_dir/RESTART/${file}_tmp $run_dir/RESTART/${file}
+        rm -f $run_dir/RESTART/${file}_tmp
+      done
+    fi
+    if [ "${IO_LAYOUT_Y_IN}" == "1" ]; then
       for file in ${filelistn}; do
         mv_vrfy $run_dir/RESTART/${file} ${nwges_dir}/RESTART/${restart_prefix}.${file}
       done
@@ -184,7 +218,7 @@ fi
 #-----------------------------------------------------------------------
 #
 if [ ${cycle_type} == "prod" ] && [ ${cycle_subtype} == "control" ]; then
-  if [ "${IO_LAYOUT_Y}" == "1" ]; then
+  if [ "${IO_LAYOUT_Y_IN}" == "1" ]; then
     cp_vrfy ${nwges_dir}/RESTART/${restart_prefix}.sfc_data.nc ${surface_dir}/${restart_prefix}.sfc_data.nc.${cdate}
   else
     for ii in ${list_iolayout}
@@ -203,7 +237,7 @@ fi
 if [ "${if_save_input}" = TRUE ]; then
   if [ "${DO_SAVE_INPUT}" = TRUE ]; then
     if [ -r ${run_dir}/INPUT/coupler.res ]; then  # warm start
-      if [ "${IO_LAYOUT_Y}" == "1" ]; then
+      if [ "${IO_LAYOUT_Y_IN}" == "1" ]; then
         for file in ${filelistn}; do
           cp_vrfy $run_dir/INPUT/${file} ${nwges_dir}/INPUT/${file}
         done

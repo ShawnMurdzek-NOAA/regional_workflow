@@ -76,6 +76,24 @@ print_input_args valid_args
 #
 #-----------------------------------------------------------------------
 #
+# Set IO_LAYOUT_Y_IN
+#
+#-----------------------------------------------------------------------
+#
+case $MACHINE in
+
+  "ORION")
+    IO_LAYOUT_Y_IN=1
+    ;;
+
+  *)
+    IO_LAYOUT_Y_IN=${IO_LAYOUT_Y}
+    ;;
+
+esac
+#
+#-----------------------------------------------------------------------
+#
 # Get the cycle date and hour (in formats of yyyymmdd and hh, respectively)
 # from cdate.
 #
@@ -98,13 +116,13 @@ cyc=$hh
 filelist="fv_core.res.nc coupler.res"
 filelistn="fv_core.res.tile1.nc fv_srf_wnd.res.tile1.nc fv_tracer.res.tile1.nc phy_data.nc sfc_data.nc"
 filelistcold="gfs_data.tile7.halo0.nc sfc_data.tile7.halo0.nc"
-n_iolayouty=$(($IO_LAYOUT_Y-1))
+n_iolayouty=$(($IO_LAYOUT_Y_IN-1))
 list_iolayout=$(seq 0 $n_iolayouty)
 
 if [ ! -r ${nwges_dir}/DA_OUTPUT/gfs_ctrl.nc ]; then
   cp_vrfy $run_dir/INPUT/gfs_ctrl.nc ${nwges_dir}/DA_OUTPUT/gfs_ctrl.nc
   if [ -r ${run_dir}/INPUT/coupler.res ]; then  # warm start
-    if [ "${IO_LAYOUT_Y}" == "1" ]; then
+    if [ "${IO_LAYOUT_Y_IN}" == "1" ]; then
       for file in ${filelistn}; do
         cp_vrfy $run_dir/INPUT/${file} ${nwges_dir}/DA_OUTPUT/${file}
       done

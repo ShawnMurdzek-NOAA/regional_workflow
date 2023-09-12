@@ -88,6 +88,7 @@ case $MACHINE in
   export OMP_NUM_THREADS=${TPP_RUN_ANAL}
   ncores=$(( NNODES_RUN_ANAL*PPN_RUN_ANAL))
   APRUN="mpiexec -n ${ncores} -ppn ${PPN_RUN_ANAL} --cpu-bind core --depth ${OMP_NUM_THREADS}"
+  IO_LAYOUT_Y_IN=${IO_LAYOUT_Y}
   ;;
 #
 "THEIA")
@@ -96,6 +97,7 @@ case $MACHINE in
   ulimit -a
   np=${SLURM_NTASKS}
   APRUN="mpirun"
+  IO_LAYOUT_Y_IN=${IO_LAYOUT_Y}
   ;;
 #
 "HERA")
@@ -104,6 +106,7 @@ case $MACHINE in
   export OMP_NUM_THREADS=1
   export OMP_STACKSIZE=300M
   APRUN="srun"
+  IO_LAYOUT_Y_IN=${IO_LAYOUT_Y}
   ;;
 #
 "ORION" | "HERCULES")
@@ -112,6 +115,7 @@ case $MACHINE in
   export OMP_NUM_THREADS=1
   export OMP_STACKSIZE=1024M
   APRUN="srun"
+  IO_LAYOUT_Y_IN=1
   ;;
 #
 "JET")
@@ -120,6 +124,7 @@ case $MACHINE in
   ulimit -s unlimited
   ulimit -a
   APRUN="srun"
+  IO_LAYOUT_Y_IN=${IO_LAYOUT_Y}
   ;;
 #
 "ODIN")
@@ -129,6 +134,7 @@ case $MACHINE in
   ulimit -s unlimited
   ulimit -a
   APRUN="srun"
+  IO_LAYOUT_Y_IN=${IO_LAYOUT_Y}
   ;;
 #
 esac
@@ -406,7 +412,7 @@ fi
 #           radar_tten converting code.
 #-----------------------------------------------------------------------
 
-n_iolayouty=$(($IO_LAYOUT_Y-1))
+n_iolayouty=$(($IO_LAYOUT_Y_IN-1))
 list_iolayout=$(seq 0 $n_iolayouty)
 
 ln_vrfy -snf ${fixgriddir}/fv3_akbk                     fv3_akbk
@@ -422,7 +428,7 @@ if [ ${BKTYPE} -eq 1 ]; then  # cold start uses background from INPUT
 
   fv3lam_bg_type=1
 else                          # cycle uses background from restart
-  if [ "${IO_LAYOUT_Y}" == "1" ]; then
+  if [ "${IO_LAYOUT_Y_IN}" == "1" ]; then
     ln_vrfy  -snf ${bkpath}/fv_core.res.tile1.nc             fv3_dynvars
     ln_vrfy  -snf ${bkpath}/fv_tracer.res.tile1.nc           fv3_tracer
     ln_vrfy  -snf ${bkpath}/sfc_data.nc                      fv3_sfcdata
@@ -931,7 +937,7 @@ fi
 if [ ${BKTYPE} -eq 1 ]; then
   n_iolayouty=1
 else
-  n_iolayouty=$(($IO_LAYOUT_Y))
+  n_iolayouty=$(($IO_LAYOUT_Y_IN))
 fi
 
 . ${FIX_GSI}/gsiparm.anl.sh

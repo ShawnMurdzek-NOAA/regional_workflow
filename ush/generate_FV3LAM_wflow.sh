@@ -341,6 +341,7 @@ settings="\
   'wtime_run_bufrsnd': ${WTIME_RUN_BUFRSND}
   'wtime_save_restart': ${WTIME_SAVE_RESTART}
   'wtime_run_jedienvar_ioda': ${WTIME_RUN_JEDIENVAR_IODA}
+  'wtime_run_py_maps': ${WTIME_RUN_PY_MAPS}
 #
 # start time for each task.
 #

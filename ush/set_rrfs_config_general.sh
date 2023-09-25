@@ -127,6 +127,7 @@ WTIME_RUN_FCST_LONG="01:45:00"
 WTIME_MAKE_LBCS="02:00:00"
 WTIME_RUN_ANAL="00:50:00"
 WTIME_RUN_PREPSTART="00:20:00"
+WTIME_RUN_PY_MAPS="03:30:00"
 
 START_TIME_SPINUP="01:30:00"
 START_TIME_PROD="01:40:00"
@@ -186,6 +187,8 @@ if [[ ${PREDEF_GRID_NAME} == "RRFS_CONUS_3km" ]] ; then
     START_TIME_SPINUP="01:10:00"
     START_TIME_PROD="02:10:00"
     START_TIME_LATE_ANALYSIS="01:40:00"
+    
+    WTIME_RUN_PY_MAPS="02:30:00"
   fi
 
   if [[ $MACHINE == "wcoss2" ]] ; then
@@ -255,6 +258,8 @@ if [[ ${PREDEF_GRID_NAME} == "RRFS_CONUS_3km" ]] ; then
     CLEAN_OLDFCST_HRS="18"
     CLEAN_OLDSTMPPOST_HRS="6"
     CLEAN_NWGES_HRS="28"
+    
+    WTIME_RUN_PY_MAPS="03:15:00"
 
   fi
 
@@ -349,6 +354,8 @@ if [[ ${PREDEF_GRID_NAME} == "RRFS_CONUS_13km" ]] ; then
 
     FV3GFS_FILE_FMT_ICS="netcdf"
     FV3GFS_FILE_FMT_LBCS="netcdf"
+    
+    WTIME_RUN_PY_MAPS="01:15:00"
   fi
 
   if [[ $MACHINE == "orion" || $MACHINE == "hercules" ]] ; then
@@ -496,6 +503,8 @@ if [[ ${PREDEF_GRID_NAME} == "RRFS_NA_3km" ]] ; then
     CLEAN_OLDFCST_HRS="18"
     CLEAN_OLDSTMPPOST_HRS="12"
     CLEAN_NWGES_HRS="18"
+    
+    WTIME_RUN_PY_MAPS="05:30:00"
 
   fi
 

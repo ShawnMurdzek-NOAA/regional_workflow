@@ -1,8 +1,8 @@
-MACHINE="orion"
+MACHINE="hercules"
 version="v0.6.2"
 ACCOUNT="wrfruc"
 #RESERVATION="rrfsdet"
-EXPT_BASEDIR="/work2/noaa/wrfruc/murdzek/RRFS_ORION"
+EXPT_BASEDIR="/work2/noaa/wrfruc/murdzek/hercules_RRFS_test"
 EXPT_SUBDIR="RRFS_CONUS_3km"
 
 PREDEF_GRID_NAME=RRFS_CONUS_3km
@@ -31,8 +31,8 @@ DO_BUFRSND="FALSE"
 USE_FVCOM="FALSE"
 PREP_FVCOM="FALSE"
 DO_PARALLEL_PRDGEN="FALSE"
-DO_OSSE="FALSE"
-USE_REAL_RED="TRUE"
+DO_OSSE="TRUE"
+USE_REAL_RED="FALSE"
 OSSE_PERIOD="winter"
 DO_GSIDIAG_OFFLINE="TRUE"
 
@@ -118,9 +118,9 @@ RUN="rrfs"
 
 . set_rrfs_config.sh
 
-STMP="/work2/noaa/wrfruc/murdzek/RRFS_ORION/NCO_dirs/stmp"  # Path to directory STMP that mostly contains input files.
-PTMP="/work2/noaa/wrfruc/murdzek/RRFS_ORION/NCO_dirs/ptmp"  # Path to directory STMP that mostly contains input files.
-NWGES="/work2/noaa/wrfruc/murdzek/RRFS_ORION/NCO_dirs/nwges"  # Path to directory NWGES that save boundary, cold initial, restart files
+STMP="/work2/noaa/wrfruc/murdzek/hercules_RRFS_test/NCO_dirs/stmp"  # Path to directory STMP that mostly contains input files.
+PTMP="/work2/noaa/wrfruc/murdzek/hercules_RRFS_test/NCO_dirs/ptmp"  # Path to directory STMP that mostly contains input files.
+NWGES="/work2/noaa/wrfruc/murdzek/hercules_RRFS_test/NCO_dirs/nwges"  # Path to directory NWGES that save boundary, cold initial, restart files
 if [[ ${regional_ensemble_option} == "5" ]]; then
   RRFSE_NWGES="YourOwnSpace/${version}/nwges"  # Path to RRFSE directory NWGES that mostly contains ensemble restart files for GSI hybrid.
   NUM_ENS_MEMBERS=30     # FV3LAM ensemble size for GSI hybrid analysis
